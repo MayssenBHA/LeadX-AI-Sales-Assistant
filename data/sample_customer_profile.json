@@ -1,0 +1,54 @@
+{
+  "customer_name": "TechCorp Industries",
+  "industry": "Manufacturing Technology",
+  "company_size": "Mid-size (200-500 employees)",
+  "pain_points": [
+    "Inefficient inventory management processes",
+    "High operational costs due to manual processes",
+    "Lack of real-time visibility into supply chain",
+    "Difficulty in forecasting demand accurately",
+    "Integration challenges with existing ERP systems"
+  ],
+  "needs": [
+    "Automated inventory management solution",
+    "Real-time analytics and reporting",
+    "Integration with current SAP system",
+    "Scalable solution for future growth",
+    "Cost reduction in operations",
+    "Improved demand forecasting capabilities"
+  ],
+  "decision_criteria": [
+    "ROI within 18 months",
+    "Seamless integration capabilities",
+    "Proven track record in manufacturing",
+    "Comprehensive training and support",
+    "Scalability for future expansion",
+    "Total cost of ownership",
+    "Implementation timeline under 6 months"
+  ],
+  "budget_range": "$150,000 - $300,000",
+  "timeline": "Q2 2025 implementation target",
+  "communication_style": "Analytical and detail-oriented",
+  "decision_makers": [
+    "John Martinez - CTO",
+    "Sarah Kim - Operations Director", 
+    "Michael Chen - CFO",
+    "Lisa Wang - IT Manager"
+  ],
+  "previous_vendors": [
+    "Oracle",
+    "SAP",
+    "Microsoft Dynamics"
+  ],
+  "current_challenges": {
+    "primary": "Manual inventory tracking leading to stockouts and overstock situations",
+    "secondary": "Poor visibility into supply chain performance",
+    "financial_impact": "Estimated $500K annual loss due to inefficiencies"
+  },
+  "preferences": {
+    "communication_frequency": "Weekly progress updates",
+    "meeting_format": "Virtual meetings preferred",
+    "documentation": "Detailed technical specifications required",
+    "decision_process": "Committee-based with 3-month evaluation period"
+  }
+}

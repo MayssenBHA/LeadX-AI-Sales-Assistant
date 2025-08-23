@@ -1,0 +1,17 @@
+{
+  "customer_name": "Test Company Inc",
+  "industry": "Technology",
+  "role": "CTO",
+  "company_size": "50-100 employees",
+  "communication_style": "Professional",
+  "pain_points": ["Legacy systems", "Performance issues"],
+  "needs": ["Modern technology stack", "Better performance"],
+  "decision_criteria": ["ROI", "Technical capability", "Support"],
+  "decision_makers": [
+    {
+      "name": "John Smith",
+      "role": "CTO",
+      "influence": "High"
+    }
+  ]
+}

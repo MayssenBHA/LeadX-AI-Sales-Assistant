@@ -1,0 +1,54 @@
+{
+  "name": "TechCorp Solutions",
+  "customer_name": "TechCorp Solutions",
+  "industry": "Technology Services",
+  "company_size": "Medium (100-500 employees)",
+  "challenges": [
+    "Manual invoice processing",
+    "Inefficient project management",
+    "Data silos across departments",
+    "High operational costs"
+  ],
+  "pain_points": [
+    "Manual invoice processing",
+    "Inefficient project management", 
+    "Data silos across departments",
+    "High operational costs"
+  ],
+  "objectives": [
+    "Automate financial processes",
+    "Improve project delivery times",
+    "Integrate data systems", 
+    "Reduce operational costs by 25%"
+  ],
+  "needs": [
+    "Automated financial systems",
+    "Project management tools",
+    "Data integration platform",
+    "Cost optimization solutions"
+  ],
+  "decision_makers": [
+    {
+      "name": "Sarah Johnson",
+      "role": "CFO"
+    },
+    {
+      "name": "Mike Chen", 
+      "role": "CTO"
+    },
+    {
+      "name": "Lisa Rodriguez",
+      "role": "Operations Director"
+    }
+  ],
+  "budget_range": "$75,000 - $200,000",
+  "timeline": "Q1 2025 implementation target",
+  "communication_preference": "Video calls and detailed emails",
+  "communication_style": "Analytical and detail-oriented",
+  "decision_criteria": [
+    "ROI within 12 months",
+    "Proven implementation track record",
+    "Strong technical support",
+    "Scalable solution architecture"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "workflow_id": "unknown",
+  "execution_timestamp": "2025-08-07T20:22:59.729982",
+  "status": "error",
+  "company_analysis": null,
+  "customer_analysis": null,
+  "conversation": null,
+  "strategy_analysis": null,
+  "personality_analysis": null,
+  "error_messages": [
+    "'AddableValuesDict' object has no attribute 'status'"
+  ],
+  "success_metrics": {
+    "document_analysis_success": false,
+    "conversation_generation_success": false,
+    "strategy_analysis_success": false,
+    "personality_analysis_success": false,
+    "overall_success": false
+  }
+}

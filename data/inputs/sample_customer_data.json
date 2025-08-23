@@ -1,0 +1,108 @@
+{
+  "customer_profile": {
+    "company_name": "TechFlow Solutions",
+    "industry": "Software Development",
+    "company_size": "50-200 employees",
+    "location": "Austin, Texas",
+    "annual_revenue": "$10M - $50M",
+    "business_model": "B2B SaaS"
+  },
+  "challenges": [
+    {
+      "title": "Inefficient Development Workflow",
+      "description": "Current development processes are slowing down feature releases and increasing time-to-market",
+      "severity": "high",
+      "impact": "Delayed product launches affecting revenue goals"
+    },
+    {
+      "title": "Limited Scalability",
+      "description": "Existing infrastructure cannot handle growing customer base and increased demand",
+      "severity": "medium", 
+      "impact": "Performance issues during peak usage"
+    },
+    {
+      "title": "Manual Quality Assurance",
+      "description": "Heavy reliance on manual testing is creating bottlenecks and quality issues",
+      "severity": "high",
+      "impact": "Increased bug rates in production"
+    }
+  ],
+  "objectives": [
+    {
+      "title": "Accelerate Development Cycle",
+      "description": "Reduce feature development time by 40% through process optimization",
+      "timeline": "6 months",
+      "priority": "high"
+    },
+    {
+      "title": "Improve System Reliability",
+      "description": "Achieve 99.9% uptime and reduce system outages",
+      "timeline": "3 months", 
+      "priority": "high"
+    },
+    {
+      "title": "Enhance Team Productivity",
+      "description": "Increase developer productivity and reduce context switching",
+      "timeline": "4 months",
+      "priority": "medium"
+    }
+  ],
+  "decision_makers": [
+    {
+      "name": "Sarah Chen",
+      "role": "CTO",
+      "influence_level": "primary",
+      "communication_style": "analytical",
+      "priorities": ["technical excellence", "scalability", "innovation"],
+      "concerns": ["implementation complexity", "team adoption", "ROI"]
+    },
+    {
+      "name": "Marcus Rodriguez", 
+      "role": "VP of Engineering",
+      "influence_level": "high",
+      "communication_style": "practical",
+      "priorities": ["team efficiency", "delivery speed", "quality"],
+      "concerns": ["learning curve", "integration challenges", "timeline"]
+    },
+    {
+      "name": "Jennifer Park",
+      "role": "Head of Product",
+      "influence_level": "medium",
+      "communication_style": "results-oriented",
+      "priorities": ["customer satisfaction", "feature velocity", "market competitiveness"],
+      "concerns": ["user experience impact", "development delays", "budget"]
+    }
+  ],
+  "current_solutions": [
+    {
+      "category": "Development Tools",
+      "tools": ["GitLab", "Jira", "Slack"],
+      "satisfaction_level": "medium",
+      "pain_points": ["tool fragmentation", "limited automation", "context switching"]
+    },
+    {
+      "category": "Testing",
+      "tools": ["Selenium", "Postman", "Manual QA"],
+      "satisfaction_level": "low", 
+      "pain_points": ["slow test execution", "flaky tests", "manual overhead"]
+    },
+    {
+      "category": "Deployment",
+      "tools": ["Jenkins", "Docker", "AWS"],
+      "satisfaction_level": "medium",
+      "pain_points": ["complex pipelines", "deployment failures", "monitoring gaps"]
+    }
+  ],
+  "budget_information": {
+    "budget_range": "$50K - $150K annually",
+    "decision_timeline": "2-3 months",
+    "approval_process": "CTO approval required for >$100K",
+    "current_spend": "$75K annually on development tools"
+  },
+  "technical_requirements": {
+    "integration_needs": ["GitLab", "Jira", "Slack", "AWS"],
+    "security_requirements": ["SOC 2 compliance", "SSO integration", "data encryption"],
+    "scalability_needs": ["support for 100+ developers", "multi-team collaboration"],
+    "compliance": ["GDPR", "SOC 2", "ISO 27001"]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "company_name": "TechCorp Inc",
+  "industry": "Software Technology",
+  "company_size": "500-1000 employees",
+  "annual_revenue": "$50M - $100M",
+  "decision_maker": {
+    "name": "Sarah Johnson",
+    "title": "Chief Technology Officer",
+    "role": "primary_decision_maker"
+  },
+  "business_needs": [
+    "Improve operational efficiency",
+    "Reduce IT infrastructure costs",
+    "Enhance data security"
+  ],
+  "pain_points": [
+    "Legacy systems causing bottlenecks",
+    "High maintenance costs",
+    "Security vulnerabilities"
+  ],
+  "budget_range": "$100K - $500K",
+  "timeline": "6-12 months",
+  "communication_style": "professional, data-driven",
+  "priority_level": "high"
+}
