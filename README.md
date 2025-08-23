@@ -6,7 +6,7 @@
 
 ## 🌟 Overview
 
-A sophisticated AI-powered B2B sales assistant that transforms how sales teams engage with prospects. Built on a **pure LangGraph multi-agent architecture**, it analyzes customer profiles, generates personalized sales conversations, and provides strategic insights through an intuitive Streamlit interface.
+An AI-powered B2B sales assistant that transforms how sales teams engage with prospects. Built on a **pure LangGraph multi-agent architecture**, it analyzes customer profiles, generates personalized sales conversations, and provides strategic insights through an intuitive Streamlit interface.
 
 ## 🎥 Video Demo
 
