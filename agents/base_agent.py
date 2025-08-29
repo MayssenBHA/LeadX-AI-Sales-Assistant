@@ -64,8 +64,9 @@ class BaseAgent(ABC):
             result = self.workflow.invoke(state, config=exec_config)
             
             # Convert result back to WorkflowState if needed
-            if hasattr(result, '__class__') and 'AddableValuesDict' in str(result.__class__):
-                # LangGraph returned AddableValuesDict, convert back to WorkflowState
+            if (hasattr(result, '__class__') and 
+                ('AddableValuesDict' in str(result.__class__) or isinstance(result, dict))):
+                # LangGraph returned AddableValuesDict or dict, convert back to WorkflowState
                 try:
                     # Create a new WorkflowState from the result dict
                     from utils.models import WorkflowState
