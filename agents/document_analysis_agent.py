@@ -449,107 +449,141 @@ class DocumentAnalysisAgent(BaseAgent):
         return True
     
     def _clean_llm_json_response(self, response_content: str) -> str:
-        """Nettoie et extrait le JSON valide de la réponse LLM"""
+        """Nettoie et extrait le JSON valide de la réponse LLM avec corrections améliorées"""
         import re
         
-        # Enlever les markers markdown
         content = response_content.strip()
+        
+        # Étape 1: Supprimer les marqueurs markdown
         content = re.sub(r'^```json\s*', '', content, flags=re.IGNORECASE | re.MULTILINE)
         content = re.sub(r'\s*```\s*$', '', content, flags=re.MULTILINE)
         content = content.strip()
         
-        # Trouver le premier objet JSON valide
+        # Étape 2: Trouver les bornes du JSON principal
+        start_pos = content.find('{')
+        if start_pos == -1:
+            logger.warning("Aucun objet JSON trouvé dans la réponse")
+            return content
+        
+        # Étape 3: Compter les accolades avec gestion robuste des strings
+        bracket_count = 0
+        end_pos = -1
+        in_string = False
+        escape_next = False
+        i = start_pos
+        
+        while i < len(content):
+            char = content[i]
+            
+            if escape_next:
+                escape_next = False
+                i += 1
+                continue
+                
+            if char == '\\':
+                escape_next = True
+                i += 1
+                continue
+                
+            if char == '"' and not escape_next:
+                in_string = not in_string
+                i += 1
+                continue
+                
+            if not in_string:
+                if char == '{':
+                    bracket_count += 1
+                elif char == '}':
+                    bracket_count -= 1
+                    if bracket_count == 0:
+                        end_pos = i + 1
+                        break
+            
+            i += 1
+        
+        if end_pos == -1:
+            end_pos = len(content)
+        
+        json_content = content[start_pos:end_pos]
+        
+        # Étape 4: Corrections spécifiques des erreurs courantes LLM
         try:
-            # Chercher le début du JSON principal - essayer plusieurs patterns
-            start_patterns = [
-                r'\{\s*"customer_name"',     # Structure directe
-                r'\{\s*"company_name"',      # Structure alternative
-                r'\{\s*"customer_company_details"', # Structure avec préfixe
-                r'\{\s*"customerAnalysis"',  # Structure attendue
-                r'\{\s*"customer_analysis"', # Structure avec underscore
-                r'\{\s*"[^"]+"\s*:\s*\{',   # Objet JSON générique avec sous-objet
-                r'\{\s*"[^"]+"\s*:\s*"',    # Objet JSON générique avec string
-                r'\{'                        # Premier objet trouvé
-            ]
+            # Fix 1: Propriétés sans guillemets (JavaScript style) 
+            json_content = re.sub(r'(\s+)([a-zA-Z_][a-zA-Z0-9_]*)\s*:', r'\1"\2":', json_content)
             
-            start_pos = -1
-            for pattern in start_patterns:
-                match = re.search(pattern, content, re.IGNORECASE)
-                if match:
-                    start_pos = match.start()
-                    break
+            # Fix 2: Guillemets doubles non-échappés dans les valeurs
+            # Pattern plus conservateur pour éviter de casser le JSON valide
+            def fix_inner_quotes(match):
+                full_match = match.group(0)
+                key = match.group(1)
+                value = match.group(2)
+                
+                # Si la valeur contient des guillemets non-échappés, les échapper
+                if '"' in value and '\\"' not in value:
+                    # Échapper seulement les guillemets non-échappés
+                    fixed_value = re.sub(r'(?<!\\)"', '\\"', value)
+                    return f'{key}"{fixed_value}"'
+                return full_match
             
-            if start_pos == -1:
-                logger.warning("Aucun début JSON trouvé dans la réponse LLM")
-                return content
+            json_content = re.sub(r'("[\w_]+"\s*:\s*)"([^"\\]*(?:\\.[^"\\]*)*)"', fix_inner_quotes, json_content)
             
-            # Trouver la fin du JSON en comptant les accolades avec plus de robustesse
-            bracket_count = 0
-            end_pos = -1
-            in_string = False
-            escape_next = False
+            # Fix 3: Virgules manquantes après } ou ] suivis de "
+            json_content = re.sub(r'([}\]])\s*\n\s*(")', r'\1,\n  \2', json_content)
             
-            for i, char in enumerate(content[start_pos:], start_pos):
-                if escape_next:
-                    escape_next = False
-                    continue
-                    
-                if char == '\\':
-                    escape_next = True
-                    continue
-                    
-                if char == '"' and not escape_next:
-                    in_string = not in_string
-                    continue
-                    
-                if not in_string:
-                    if char == '{':
-                        bracket_count += 1
-                    elif char == '}':
-                        bracket_count -= 1
-                        if bracket_count == 0:
-                            end_pos = i + 1
-                            break
+            # Fix 4: Virgules en trop avant } ou ]
+            json_content = re.sub(r',(\s*[}\]])', r'\1', json_content)
             
-            if end_pos == -1:
-                logger.warning("Fin JSON non trouvée, utilisation du contenu complet")
-                # Si pas de fin trouvée, utiliser tout le contenu disponible
-                end_pos = len(content)
+            # Fix 5: Gestion des apostrophes problématiques
+            json_content = re.sub(r"'([^']*)'", r'"\1"', json_content)
             
-            cleaned_json = content[start_pos:end_pos]
+            # Test final de parsing
+            json.loads(json_content)
+            logger.info(f"JSON nettoyé avec succès: {len(json_content)} caractères")
+            return json_content
             
-            # Validation finale : essayer de parser
-            json.loads(cleaned_json)
+        except json.JSONDecodeError as e:
+            logger.warning(f"Échec des corrections JSON avancées: {e}")
             
-            logger.info(f"JSON extrait avec succès: {len(cleaned_json)} caractères")
-            return cleaned_json
-            
-        except (json.JSONDecodeError, ValueError) as e:
-            logger.warning(f"Échec nettoyage JSON intelligent: {e}")
-            
-            # Fallback plus robuste
-            # Enlever tous les markers markdown
-            content = re.sub(r'```[a-zA-Z]*\s*', '', content, flags=re.IGNORECASE)
-            content = re.sub(r'\s*```\s*', '', content, flags=re.MULTILINE)
-            content = content.strip()
-            
-            # Essayer de trouver la structure JSON la plus longue possible
-            brace_start = content.find('{')
-            if brace_start != -1:
+            # Fallback: méthode robuste simplifiée
+            try:
+                # Chercher le début du JSON principal - essayer plusieurs patterns
+                start_patterns = [
+                    r'\{\s*"customer_name"',     # Structure directe
+                    r'\{\s*"company_name"',      # Structure alternative  
+                    r'\{\s*"customerAnalysis"',  # Structure attendue
+                    r'\{\s*"customer_analysis"', # Structure avec underscore
+                    r'\{'                        # Premier objet trouvé
+                ]
+                
+                start_pos = -1
+                for pattern in start_patterns:
+                    match = re.search(pattern, content, re.IGNORECASE)
+                    if match:
+                        start_pos = match.start()
+                        break
+                
+                if start_pos == -1:
+                    return content
+                
                 # Compter les accolades pour trouver la fin logique
                 bracket_count = 0
-                for i, char in enumerate(content[brace_start:], brace_start):
+                for i, char in enumerate(content[start_pos:], start_pos):
                     if char == '{':
                         bracket_count += 1
                     elif char == '}':
                         bracket_count -= 1
                         if bracket_count == 0:
-                            return content[brace_start:i + 1]
+                            return content[start_pos:i + 1]
                 
                 # Si pas de fermeture trouvée, utiliser tout le contenu
-                return content[brace_start:]
-            
-            return content
+                return content[start_pos:]
+                
+            except Exception:
+                # Fallback ultime
+                brace_start = content.find('{')
+                if brace_start != -1:
+                    return content[brace_start:]
+                return content
     
     def _transform_llm_structure(self, llm_data: dict) -> dict:
         """Transforme la structure complexe du LLM vers la structure plate attendue"""
